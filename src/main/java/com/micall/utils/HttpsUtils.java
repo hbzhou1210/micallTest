@@ -1,10 +1,16 @@
 package com.micall.utils;
 
+import com.micall.constant.Constants;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpRequest;
 import org.apache.http.NoHttpResponseException;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -13,20 +19,18 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLInitializationException;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
-
+import org.apache.http.util.EntityUtils;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLHandshakeException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.UnknownHostException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
@@ -54,7 +58,7 @@ public class HttpsUtils {
 //        CloseableHttpResponse response = httpClient.execute(httpPost);
 //        BufferedReader in = null;
 //}
-    /*
+    /**
         初始化连接池管理器，配置SSL
      */
     static {
@@ -77,7 +81,7 @@ public class HttpsUtils {
             }
         }
     }
-    /*
+    /**
      *创建HttpClient客户端连接对象，并配置连接池配置项
      *@return
      */
@@ -88,7 +92,7 @@ public class HttpsUtils {
                 .setConnectTimeout(10000)
                 .setSocketTimeout(6000)
                 .build();
-        /*
+        /**
             设置超时重试机制，为了防止超时不生效
             根据不同的情况进行判断是否需要重试
          */
@@ -134,6 +138,179 @@ public class HttpsUtils {
     private static HttpClientBuilder setDefaultRequestConfig(RequestConfig requestConfig){
         return null;
     }
+    /**
+    *不带参数的get请求
+    * @param url 请求地址
+    * @param isAuthentication 是否需要鉴权
+    * @return
+     */
+    public static String httpGetJson(String url,String language,boolean isAuthentication){
+        // 创建一个get请求连接
+        HttpGet get = new HttpGet(url);
+        // 传入请求头
+        get.setHeader(Constants.REQ_HEADER_TYPE_NAME, Constants.REQ_HEADER_TYPE_VALUE_JSON);
+        get.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        // 添加鉴权头
+        if(isAuthentication){
+            AuthorizationUtils.setTokenInRequest(get);
+        }
+        // 定义响应体
+        CloseableHttpResponse response = null;
+        try{
+            // 获取连接客户端
+            CloseableHttpClient client =getHttpClient();
+            // 发起请求
+            response =client.execute(get);
+            // 获取响应体
+            HttpEntity entity = response.getEntity();
+            // 响应体内容转为字符串类型
+            String reqBody = EntityUtils.toString(entity);
+            return reqBody;
+        } catch (IOException e) {
+            logger.info("get请求异常");
+        }finally {
+            if(response != null){
+                try{
+                    response.close();//关闭连接
+                } catch (IOException e) {
+                    logger.info("关闭连接出错");
+                }
+            }
+        }
+        return null;
+    }
+    /**
+     * Url带参数的表单提交请求
+     * @param url 请求地址
+     * @param params 请求参数
+     * @param isAuthentication 是否需要鉴权
+     * @return
+     */
+    public static String httpGetForm(String url,String params,String language,boolean isAuthentication){
+        // 创建一个get请求对象并传入请求地址
+        // 地址格式为“http://xxxx/
+        HttpGet get = new HttpGet(url+"?"+params);
+        // 传入请求头
+        get.setHeader(Constants.REQ_HEADER_TYPE_NAME,Constants.REQ_HEADER_TYPE_VALUE_FROM);
+        get.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        // 添加鉴权
+        if(isAuthentication){
+            AuthorizationUtils.setTokenInRequest(get);
+        }
+        // 定义响应体
+        CloseableHttpResponse response = null;
+        try{
+            // 获取连接客户端
+            CloseableHttpClient client = getHttpClient();
+            // 发起请求
+            response =client.execute(get);
+            // 获取响应体
+            HttpEntity entity = response.getEntity();
+            // 响应体内容转化字符串类型
+            String reqBody = EntityUtils.toString(entity);
+            return reqBody;
+        } catch (Exception e) {
+                logger.info("get请求异常");
+        }finally {
+            if(response != null){
+                try {
+                    response.close(); //关闭连接
+                } catch (IOException e) {
+                    logger.info("关闭连接出错");
+                }
+            }
+        }
+        return null;
+    }
+    /**
+     * json格式的post请求
+     * @param url 请求地址
+     * @param params 请求参数
+     * @param isAuthentication 是否需要鉴权
+     * @return
+     */
+    public static String httpPostJson(String url,String params,String language,boolean isAuthentication){
+        // 定义post请求对象并传入url
+        HttpPost post = new HttpPost(url);
+        // 传入请求头
+        post.setHeader(Constants.REQ_HEADER_TYPE_NAME,Constants.REQ_HEADER_TYPE_VALUE_JSON);
+        post.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        // 添加鉴权头
+        if(isAuthentication){
+            AuthorizationUtils.setTokenInRequest(post);
+        }
+        // 传入请求参数
+        post.setEntity(new StringEntity(params,"UTF-8"));
+        // 定义响应体
+        CloseableHttpResponse response =null;
+        try {
+            // 获取客户端连接
+            CloseableHttpClient client =getHttpClient();
+            // 发起请求
+            response=client.execute(post);
+            // 获取响应体
+            HttpEntity entity = response.getEntity();
+            // 响应体内容转为字符串类型
+            String reqBody = EntityUtils.toString(entity);
+            return reqBody;
+        }catch (Exception e){
+            logger.info("Post请求异常"+e);
+        }finally {
+            if(response !=null){
+                try {
+                    response.close(); // 关闭连接
+                }catch (IOException e2){
+                    logger.info("关闭连接出错"+e2);
+                }
+            }
+        }
+        return null;
+    }
+    /**
+     * Form格式的post请求
+     * @param url 请求地址
+     * @param params 请求参数
+     * @param isAuthentication 是否需要鉴权
+     * @return
+     */
+    public static String httpPostForm(String url,String params,String language,boolean isAuthentication){
+        // 定义post请求对象并传入url
+        HttpPost post = new HttpPost(url);
+        // 传入请求头
+        post.setHeader(Constants.REQ_HEADER_TYPE_NAME,Constants.REQ_HEADER_TYPE_VALUE_FROM);
+        post.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        // 添加鉴权头
+        if(isAuthentication){
+            AuthorizationUtils.setTokenInRequest(post);
+        }
+        // 传入请求参数
+        post.setEntity(new StringEntity(params,"UTF-8"));
+        // 定义响应体
+        CloseableHttpResponse response =null;
+        try {
+            // 获取客户端连接
+            CloseableHttpClient client =getHttpClient();
+            // 发起请求
+            response=client.execute(post);
+            // 获取响应体
+            HttpEntity entity = response.getEntity();
+            // 响应体内容转为字符串类型
+            String reqBody = EntityUtils.toString(entity);
+            return reqBody;
+        }catch (Exception e){
+            logger.info("Post请求异常"+e);
+        }finally {
+            if(response !=null){
+                try {
+                    response.close(); // 关闭连接
+                }catch (IOException e2){
+                    logger.info("关闭连接出错"+e2);
+                }
+            }
+        }
+        return null;
+    }
+
 }
 
 
