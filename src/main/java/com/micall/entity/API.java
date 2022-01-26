@@ -23,7 +23,34 @@ public class API {
     // 参数类型
     @Excel(name="参数类型")
     private String contentType;
-    public String getId(){
+
+    public void setId(String id){
+        this.id = id;
+    }
+    public String getApiNumber(){
         return id;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+    public String getApiName(){return name;};
+    public void setMethod(String method){
+        this.method = method;
+    }
+    public String getApiReqMethod(){
+        return method;
+    }
+    public void setUrl(String url){
+        this.url = url;
+    }
+    public String getApiUrl(){
+        return url;
+    }
+    public void setContentType(String contentType){
+        this.contentType = contentType;
+    }
+    public String getApiSubmitType(){
+        return contentType;
+    }
+//    public String getId(){return id;}
 }

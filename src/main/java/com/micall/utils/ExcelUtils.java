@@ -4,7 +4,7 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.micall.constant.Constants;
 import com.micall.entity.API;
-import com.micall.entity.Case;
+import com.micall.entity.Cases;
 import com.micall.entity.WriteBackData;
 import org.apache.poi.ss.usermodel.*;
 
@@ -60,18 +60,18 @@ public class ExcelUtils {
     }
 
     // 读取excel中第二个sheet，Case，通过read方法一次性把所有用例的数据都读取放到list集合里
-    public static List<Case> caseList;
+    public static List<Cases> casesList;
 
     static {
         try {
-            caseList = ExcelUtils.read(1, Case.class);
+            casesList = ExcelUtils.read(1, Cases.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     // excel回写数据集合
-    public static List<WriteBackData> writeBackData = new ArrayList<WriteBackData>();
+    public static List<WriteBackData> wbdList = new ArrayList<WriteBackData>();
     /**
      * 从已经读取好的所有List<API>和所有List<Case>
      *     两个集合中获取符合条件的数据
@@ -81,20 +81,20 @@ public class ExcelUtils {
         // 需要的API对象，接口信息一个接口编号只有一个
         API wantAPI = null;
         // 需要的Case对象，用例一个接口编号有多个用例，所以这里定义的是list集合
-        List<Case> wantCaseList = new ArrayList<Case>();
+        List<Cases> wantCasesList = new ArrayList<Cases>();
         // 匹配API对象
         for (API api :apiList){
-            if(apiId.equals(api.getId())){
+            if(apiId.equals(api.getApiNumber())){
                 // 传入的apiId和API对象中的id相等则返回
                 wantAPI = api;
                 break;
             }
         }
         // 匹配Case对象
-        for(Case c : caseList){
+        for(Cases c : casesList){
             // 传入的apiId和Case集合中的apiId相等则返回
             if(apiId.equals(c.getApiId())){
-                wantCaseList.add(c);
+                wantCasesList.add(c);
             }
         }
         // wantCaseList和wantAPI是有关联的，他们的apiId是相等的
@@ -102,12 +102,12 @@ public class ExcelUtils {
         // 该注解返回的是一个二维数组，所以此方法也返回一个二维数组
         // Object[][] datas = new Object[方法运行的次数][方法参数的个数]
         // wantCaseList.size() 是需要循环执行的用例次数，有多少个用例就执行几次，可以固定写几
-        Object[][] datas = new Object[wantCaseList.size()][2];
+        Object[][] datas = new Object[wantCasesList.size()][2];
         // Object[][] datas = {{api,case1},{api,case2},{api,case3}}
         // 往二位数组中存储api和case数据，存几次由case确定
-        for (int i=0;i < wantCaseList.size();i++){
+        for (int i = 0; i < wantCasesList.size(); i++){
             datas[i][0] =wantAPI;
-            datas[i][1] =wantCaseList.get(i);
+            datas[i][1] = wantCasesList.get(i);
         }
         return datas;
     }
@@ -123,7 +123,6 @@ public class ExcelUtils {
             Sheet sheet = workbook.getSheetAt(1);
             // 回写,操作行和列
             // 1. 遍历wbdList集合
-            List<WriteBackData> wbdList = new ArrayList<WriteBackData>();
             for (WriteBackData wbd : wbdList){
                 //2.获取行号，获取row对象
                 int rowNum = wbd.getRowNum();
