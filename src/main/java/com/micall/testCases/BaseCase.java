@@ -33,14 +33,14 @@ public class BaseCase {
     }
     // 项目支持语言,如果支持更多语言可以在此加入
     public void execute(API api,Cases cases){
-        executeAll(api,cases,"zh-cn");
+        executeAll(api,cases,"zh-Hans");
     }
     // 从excel表格中获取对象，提取出请求信息，用例信息
 //    @Step("接口调用")
     public String call(API api,Cases cases,String language,boolean isAuthentication){
         logger.info("----开始调用接口请求----");
-        logger.info("----接口编号和接口名称："+api.getApiNumber()+"、"+api.getApiName());
-        logger.info("----用例编号和用例描述："+cases.getCaseNumber()+"、"+cases.getCaseDesc());
+        logger.info("----接口编号和接口名称："+api.getApiNumber()+"、"+api.getApiName()+"----");
+        logger.info("----用例编号和用例描述："+cases.getCaseNumber()+"、"+cases.getCaseDesc()+"----");
         String url ="";
         if("get".equalsIgnoreCase(api.getApiReqMethod())){
             // 在url添加一个判断，就是进行get无参请求里，一个异常用例，即在url随便加上一个参数去请求

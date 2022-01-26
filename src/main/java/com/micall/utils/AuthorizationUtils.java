@@ -1,7 +1,7 @@
 package com.micall.utils;
 
+import com.alibaba.fastjson.JSONPath;
 import com.iceolive.util.StringUtil;
-import com.jayway.jsonpath.JsonPath;
 import org.apache.http.HttpRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,13 +16,13 @@ public class AuthorizationUtils {
     public static void storeTokenAddMemberId(String response){
         // 从接口响应中获取token信息
         // 从登录接口的响应数据中获取到token的路径$.data.token_info.token,采用isonPath，格式是以$开头
-        Object token = JsonPath.read(response,"$.data.token_info.token");
+        Object token = JSONPath.read(response,"$.data.token_info.token");
         // token不等于空，说明登录成功
         if (token != null){
             // 存储token到环境变量中
             env.put("${token}",token.toString());
             // 登录成功后token不为空那么获取id肯定是memberId
-            Object memberId = JsonPath.read(response,"$.data.id");
+            Object memberId = JSONPath.read(response,"$.data.id");
             if(memberId !=null){
                 // 存储memberId
                 env.put("${member_id}",memberId.toString());

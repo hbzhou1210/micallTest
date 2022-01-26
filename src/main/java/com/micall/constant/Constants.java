@@ -8,7 +8,7 @@ public class Constants {
     //final修饰类，类不能被继承
     //final修饰方法，不能被重写
     //Excel路径
-    public static final String EXCEL_PATH="E:\\workspace\\micallTest\\src\\test\\resources\\micall接口测试.xls";
+    public static final String EXCEL_PATH="C:\\Users\\87007\\IdeaProjects\\micallTest\\src\\test\\resources\\micall接口测试.xls";
     //token鉴权版本
     public static final String HEADER_MEDIA_TYPE_NAME="";
     public static final String HEADER_MEDIA_TYPE_VALUE="";
@@ -36,13 +36,13 @@ public class Constants {
     public static final String REQ_HEADER_TYPE_VALUE_FROM_mh_device_id="E0F2E486-9EBB-4A81-9C5A-B93DF8ED1A59";
     public static final String REQ_HEADER_TYPE_VALUE_FROM_accept="*/*";
     public static final String REQ_HEADER_TYPE_VALUE_FROM_mh_device_type="0";
-    public static final String REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe="iPhone 7 Plus-15.2.1";
+    public static final String REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe="iPhone7Plus-15.2.1";
     public static final String REQ_HEADER_TYPE_VALUE_FROM_accept_language="zh-Hans;q=1";
-    public static final String REQ_HEADER_TYPE_VALUE_FROM_accept_encoding="gzip, deflate, br";
+    public static final String REQ_HEADER_TYPE_VALUE_FROM_accept_encoding="gzip,deflate,br";
     public static final String REQ_HEADER_TYPE_VALUE_FROM_content_length="60";
-    public static final String REQ_HEADER_TYPE_VALUE_FROM_user_agent="MiCall/1.0.0 (iPhone; iOS 15.2.1; Scale/3.00)";
+    public static final String REQ_HEADER_TYPE_VALUE_FROM_user_agent="MiCall/1.0.0(iPhone;iOS15.2.1;Scale/3.00)";
     public static final String REQ_HEADER_TYPE_VALUE_JSON="";
-    public static final String REQ_HEADER_LANGUAGE_Name="";
+    public static final String REQ_HEADER_LANGUAGE_Name="zh-Hans";
     public static final String REQ_HEADER_TYPE_VALUE_FROM="";
 
 }

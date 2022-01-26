@@ -22,6 +22,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLHandshakeException;
@@ -30,7 +32,11 @@ import java.io.InterruptedIOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -48,7 +54,12 @@ public class HttpsUtils {
             try {
                 //创建ssl安全访问连接
                 //获取创建SSL上下文对象
-                SSLContext sslContext = SSLContext.getInstance("SSL");
+                SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null,new TrustStrategy(){
+                    @Override
+                    public boolean isTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+                        return true;
+                    }
+                }).build();
                 // 注册
                 Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
                         .register("http", PlainConnectionSocketFactory.INSTANCE)
@@ -58,7 +69,7 @@ public class HttpsUtils {
                 connectionManager = new PoolingHttpClientConnectionManager(registry);
                 connectionManager.setMaxTotal(1000); // 设置连接池最大连接数
                 connectionManager.setDefaultMaxPerRoute(20); // 设置每个路由最大连接数
-            } catch (SSLInitializationException | NoSuchAlgorithmException e) {
+            } catch (SSLInitializationException | NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
                 e.printStackTrace();
             }
         }
@@ -233,17 +244,12 @@ public class HttpsUtils {
         // 定义post请求对象并传入url
         HttpPost post = new HttpPost(url);
         // 传入请求头
-        post.setHeader(Constants.REQ_HEADER_TYPE_content_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
-        post.setHeader(Constants.REQ_HEADER_TYPE_accept, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
-        post.setHeader(Constants.REQ_HEADER_TYPE_accept_language, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_language);
-        post.setHeader(Constants.REQ_HEADER_TYPE_accept_encoding, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_encoding);
-        post.setHeader(Constants.REQ_HEADER_TYPE_content_length, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_length);
-        post.setHeader(Constants.REQ_HEADER_TYPE_user_agent, Constants.REQ_HEADER_TYPE_VALUE_FROM_user_agent);
-//        post.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        post.addHeader(Constants.REQ_HEADER_TYPE_content_type,Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
+//        post.addHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
         // 添加鉴权头
         if(isAuthentication){
             AuthorizationUtils.setTokenInRequest(post);
@@ -251,12 +257,12 @@ public class HttpsUtils {
         // 传入请求参数
         post.setEntity(new StringEntity(params,"UTF-8"));
         // 定义响应体
-        CloseableHttpResponse response =null;
+        CloseableHttpResponse response = null;
         try {
             // 获取客户端连接
-            CloseableHttpClient client =getHttpClient();
+            CloseableHttpClient client = getHttpClient();
             // 发起请求
-            response=client.execute(post);
+            response = client.execute(post);
             // 获取响应体
             HttpEntity entity = response.getEntity();
             // 响应体内容转为字符串类型
@@ -264,6 +270,7 @@ public class HttpsUtils {
             return reqBody;
         }catch (Exception e){
             logger.info("Post请求异常"+e);
+
         }finally {
             if(response !=null){
                 try {

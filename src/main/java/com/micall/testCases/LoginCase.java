@@ -1,5 +1,6 @@
 package com.micall.testCases;
 
+import com.micall.constant.Constants;
 import com.micall.entity.API;
 import com.micall.entity.Cases;
 import com.micall.utils.AuthorizationUtils;
@@ -23,6 +24,11 @@ public class LoginCase extends BaseCase {
         AuthorizationUtils.storeTokenAddMemberId(reqBody);
         boolean assertResponseFlag = assertResponse(cases,language,reqBody);
         String assertContent = (assertResponseFlag) ?"Pass":"Fail";
+        if("zh-Hans".equals(language)){
+            addWBD(Integer.parseInt(cases.getCaseNumber()), Constants.ACTUAL_WAITER_BACK_CELL_NUM, reqBody);
+            addWBD(Integer.parseInt(cases.getCaseNumber()),Constants.ACTUAL_result_CALL_CELL_NUM,assertContent);
+            System.out.println();
+        }
     }
     @DataProvider(name = "datas")
     public Object[][] datas(){
