@@ -62,7 +62,7 @@ public class BaseCase {
         return resBody;
     }
     /**
-     * 添加诙谐对象到回写集合里
+     * 添加回写对象到回写集合里
      * @param rowNum 回写行号
      * @param cellNum 回写列号
      * @param body  回写内容
@@ -83,11 +83,11 @@ public class BaseCase {
      * @return
      */
     public boolean assertResponse(Cases cases,String language,String resBody){
-        boolean flag =false;
+        boolean flag = false;
         // 根据不同的语言，获取不同的期望响应数据
         // cases类中需要定义不同的语言转换
         String expectValue = "";
-        if("zh-cn".equalsIgnoreCase(language)){
+        if("zh-Hans".equalsIgnoreCase(language)){
             expectValue = cases.getCaseExpectValue();
         }
         // 字符串转化为json对象
@@ -103,7 +103,7 @@ public class BaseCase {
                 String value = jsonPathValidate.getValue();
                 // 对响应结果进行一个jsonPath寻找实际值
                 String actualValue = JSONPath.read(resBody,expression) == null
-                        ?"": JSONPath.read(resBody,expression).toString();
+                        ? "": JSONPath.read(resBody,expression).toString();
                 // 期望值和实际值进行对比
                 flag = value.equals(actualValue);
                 if(flag == false){
@@ -162,21 +162,21 @@ public class BaseCase {
     @BeforeTest
     public void init() throws Exception {
         logger.info("======项目自动化开始======");
-//        // 从params.properties中读取参数化内容
-//        Properties properties = new  Properties();
-//        FileInputStream fiStream = new FileInputStream("src/test/resources/params.properties");
-//        properties.load(fiStream);
-//        fiStream.close();
-//        // 从params.properties中读取参数化内容保存到env集合中
-//        for (Object key : properties.keySet()){
-//            Object value = properties.get(key);
-//            // 判断配置文件中是否包含username
-//            if(key.toString().contains("username")){
-//                // 包含，随机生成一个用户名替换username
-//                // 把${username}作为键，随机生成的用户名作为值存到evn集合
-//                AuthorizationUtils.env.put(key.toString(),CreateRegisterName.gerCharAndNumb(6));
-//            }
-//        }
+        // 从params.properties中读取参数化内容
+        Properties properties = new  Properties();
+        FileInputStream fiStream = new FileInputStream("src/test/resources/params.properties");
+        properties.load(fiStream);
+        fiStream.close();
+        // 从params.properties中读取参数化内容保存到env集合中
+        for (Object key : properties.keySet()){
+            Object value = properties.get(key);
+            // 判断配置文件中是否包含username
+            if(key.toString().contains("username")){
+                // 包含，随机生成一个用户名替换username
+                // 把${username}作为键，随机生成的用户名作为值存到evn集合
+                AuthorizationUtils.env.put(key.toString(),CreateRegisterName.gerCharAndNumb(6));
+            }
+        }
     }
     @AfterSuite
     /**

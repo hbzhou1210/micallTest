@@ -15,7 +15,7 @@ public class AuthorizationUtils {
      */
     public static void storeTokenAddMemberId(String response){
         // 从接口响应中获取token信息
-        // 从登录接口的响应数据中获取到token的路径$.data.token_info.token,采用isonPath，格式是以$开头
+        // 从登录接口的响应数据中获取到token的路径$.data.token_info.token,采用JsonPath，格式是以$开头
         Object token = JSONPath.read(response,"$.data.token_info.token");
         // token不等于空，说明登录成功
         if (token != null){

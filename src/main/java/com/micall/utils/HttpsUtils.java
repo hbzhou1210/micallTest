@@ -141,17 +141,11 @@ public class HttpsUtils {
         // 创建一个get请求连接
         HttpGet get = new HttpGet(url);
         // 传入请求头
-        get.setHeader(Constants.REQ_HEADER_TYPE_content_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
-        get.setHeader(Constants.REQ_HEADER_TYPE_accept, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
-        get.setHeader(Constants.REQ_HEADER_TYPE_accept_language, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_language);
-        get.setHeader(Constants.REQ_HEADER_TYPE_accept_encoding, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_encoding);
-        get.setHeader(Constants.REQ_HEADER_TYPE_content_length, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_length);
-        get.setHeader(Constants.REQ_HEADER_TYPE_user_agent, Constants.REQ_HEADER_TYPE_VALUE_FROM_user_agent);
-//        get.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        get.addHeader(Constants.REQ_HEADER_TYPE_content_type,Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
         // 添加鉴权头
         if(isAuthentication){
             AuthorizationUtils.setTokenInRequest(get);
@@ -193,17 +187,11 @@ public class HttpsUtils {
         // 地址格式为“http://xxxx/
         HttpGet get = new HttpGet(url+"?"+params);
         // 传入请求头
-        get.setHeader(Constants.REQ_HEADER_TYPE_content_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
-        get.setHeader(Constants.REQ_HEADER_TYPE_accept, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
-        get.setHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
-        get.setHeader(Constants.REQ_HEADER_TYPE_accept_language, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_language);
-        get.setHeader(Constants.REQ_HEADER_TYPE_accept_encoding, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_encoding);
-        get.setHeader(Constants.REQ_HEADER_TYPE_content_length, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_length);
-        get.setHeader(Constants.REQ_HEADER_TYPE_user_agent, Constants.REQ_HEADER_TYPE_VALUE_FROM_user_agent);
-//        get.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        get.addHeader(Constants.REQ_HEADER_TYPE_content_type,Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
+        get.addHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
         // 添加鉴权
         if(isAuthentication){
             AuthorizationUtils.setTokenInRequest(get);
@@ -249,7 +237,6 @@ public class HttpsUtils {
         post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
         post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
         post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
-//        post.addHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
         // 添加鉴权头
         if(isAuthentication){
             AuthorizationUtils.setTokenInRequest(post);
@@ -293,17 +280,11 @@ public class HttpsUtils {
         // 定义post请求对象并传入url
         HttpPost post = new HttpPost(url);
         // 传入请求头
-//        post.setHeader("Content-type","application/x-www-form-urlencoded");
-        post.setHeader(Constants.REQ_HEADER_TYPE_content_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
-        post.setHeader(Constants.REQ_HEADER_TYPE_accept, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
-        post.setHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
-        post.setHeader(Constants.REQ_HEADER_TYPE_accept_language, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_language);
-        post.setHeader(Constants.REQ_HEADER_TYPE_accept_encoding, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_encoding);
-        post.setHeader(Constants.REQ_HEADER_TYPE_content_length, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_length);
-        post.setHeader(Constants.REQ_HEADER_TYPE_user_agent, Constants.REQ_HEADER_TYPE_VALUE_FROM_user_agent);
+        post.addHeader(Constants.REQ_HEADER_TYPE_content_type,Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
+        post.addHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
         // 添加鉴权头
         if(isAuthentication){
             AuthorizationUtils.setTokenInRequest(post);
@@ -362,17 +343,11 @@ public class HttpsUtils {
         // 定义put请求对象并传入url
         HttpPut put = new HttpPut(url);
         // 传入请求头
-        put.setHeader(Constants.REQ_HEADER_TYPE_content_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
-        put.setHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
-        put.setHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
-        put.setHeader(Constants.REQ_HEADER_TYPE_accept, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept);
-        put.setHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
-        put.setHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
-        put.setHeader(Constants.REQ_HEADER_TYPE_accept_language, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_language);
-        put.setHeader(Constants.REQ_HEADER_TYPE_accept_encoding, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_encoding);
-        put.setHeader(Constants.REQ_HEADER_TYPE_content_length, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_length);
-        put.setHeader(Constants.REQ_HEADER_TYPE_user_agent, Constants.REQ_HEADER_TYPE_VALUE_FROM_user_agent);
-//        put.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        put.addHeader(Constants.REQ_HEADER_TYPE_content_type,Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
+        put.addHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
+        put.addHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
+        put.addHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
+        put.addHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
         // 添加鉴权头
         if(isAuthentication){
             AuthorizationUtils.setTokenInRequest(put);
@@ -485,18 +460,11 @@ public class HttpsUtils {
     public static String httpDeleteJson(String url,String param,String language,boolean isAuthentication){
         // 创建delete对象并传入url
         HttpDeleteWithBody delete = new HttpDeleteWithBody(url);
-        // 传入请求头
-        delete.setHeader(Constants.REQ_HEADER_TYPE_content_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_accept, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_accept_language, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_language);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_accept_encoding, Constants.REQ_HEADER_TYPE_VALUE_FROM_accept_encoding);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_content_length, Constants.REQ_HEADER_TYPE_VALUE_FROM_content_length);
-        delete.setHeader(Constants.REQ_HEADER_TYPE_user_agent, Constants.REQ_HEADER_TYPE_VALUE_FROM_user_agent);
-//        delete.setHeader(Constants.REQ_HEADER_LANGUAGE_Name,language);
+        delete.addHeader(Constants.REQ_HEADER_TYPE_content_type,Constants.REQ_HEADER_TYPE_VALUE_FROM_content_type);
+        delete.addHeader(Constants.REQ_HEADER_TYPE_mh_device_type, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_type);
+        delete.addHeader(Constants.REQ_HEADER_TYPE_mh_device_name, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_name);
+        delete.addHeader(Constants.REQ_HEADER_TYPE_mh_device_id, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_id);
+        delete.addHeader(Constants.REQ_HEADER_TYPE_mh_device_describe, Constants.REQ_HEADER_TYPE_VALUE_FROM_mh_device_describe);
         // 添加鉴权头
         if(isAuthentication){
             AuthorizationUtils.setTokenInRequest(delete);
