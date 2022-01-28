@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="thread">
+    <test name = "demo1">
+        <classes>
+            <class name="com.micall.testCases.LoginCase"/>
+            <class name="com.micall.testCases.LoginCase2"/>
+            <class name="com.micall.testCases.LoginCase3"/>
+
+        </classes>
+
+    </test>
+
+</suite>

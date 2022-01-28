@@ -44,7 +44,7 @@ public class BaseCase {
         if("get".equalsIgnoreCase(api.getApiReqMethod())){
             // 在url添加一个判断，就是进行get无参请求里，一个异常用例，即在url随便加上一个参数去请求
             if(cases.getCaseDesc().contains("URL带参数请求")){
-                url = api.getApiUrl() + "?" +"service_button=1";
+                url = api.getApiUrl() + "?";
                 System.out.println(url);
             }else {
                 url =api.getApiUrl();

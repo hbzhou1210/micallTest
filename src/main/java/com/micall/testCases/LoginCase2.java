@@ -21,7 +21,7 @@ public class LoginCase2 extends BaseCase {
             e.printStackTrace();
         }
         String reqBody = call(api,cases,language,false);
-        AuthorizationUtils.storeTokenAddMemberId(reqBody);
+        AuthorizationUtils.storeToken(reqBody);
         boolean assertResponseFlag = assertResponse(cases,language,reqBody);
         String assertContent = (assertResponseFlag) ?"Pass":"Fail";
         if("zh-Hans".equals(language)){

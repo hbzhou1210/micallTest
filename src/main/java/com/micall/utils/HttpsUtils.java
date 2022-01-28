@@ -154,7 +154,7 @@ public class HttpsUtils {
         CloseableHttpResponse response = null;
         try{
             // 获取连接客户端
-            CloseableHttpClient client =getHttpClient();
+            CloseableHttpClient client = getHttpClient();
             // 发起请求
             response =client.execute(get);
             // 获取响应体
