@@ -12,7 +12,6 @@ import com.micall.utils.AuthorizationUtils;
 import com.micall.utils.CreateRegisterName;
 import com.micall.utils.ExcelUtils;
 import com.micall.utils.HttpsUtils;
-import org.apache.commons.lang3.AnnotationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeTest;
@@ -82,7 +81,9 @@ public class BaseCase {
      * @param resBody
      * @return
      */
-    public boolean assertResponse(Cases cases,String language,String resBody){
+    private  String expression;
+    private  String value;
+    public boolean assertResponse(Cases cases, String language, String resBody){
         boolean flag = false;
         // 根据不同的语言，获取不同的期望响应数据
         // cases类中需要定义不同的语言转换
@@ -119,6 +120,37 @@ public class BaseCase {
             flag = resBody.equals(expectValue);
         }
         return flag;
+//        boolean flag = true;
+//        // 判断预期结果是否与实际结果相符，封装成一个方法，放在BaseCase类里面
+//        String expectedResult = cases.getCaseExpectValue();
+//        Object jsonObject = JSONObject.parse(expectedResult);
+//        if (jsonObject instanceof JSONArray){  // 如果预期响应结果数据解析出来是个数组
+//            // 将预期结果封装成jsonPathValidate对象
+//            List <JsonPathValidate> list = JSONObject.parseArray(expectedResult,JsonPathValidate.class);
+//            // 遍历结合，去除表达式的值
+//            for (JsonPathValidate jsonPathValidate :list){
+//                // 表达式
+//                String path = jsonPathValidate.getExpression();
+//                // 表达式的值
+//                String expectedValue = jsonPathValidate.getValue();
+//                // 用jsonpath提取出想要的内容，并判断
+//                // JSONPath.read(resBody,path) == null 如果为null的话，是不能转成字符串的，所以先判断是否为null
+//                String actualValue = JSONPath.read(resBody,path) == null
+//                       ? "": JSONPath.read(resBody,path).toString();
+//                if (!actualValue.equals(expectedValue)){
+//                    flag = false;
+//                    break;
+//                }
+//            }
+//        }else if (jsonObject instanceof JSONObject){ // 如果预期响应结果数据解析出来不是数组
+//            flag = expectedResult.equals(resBody);
+//        }
+//        System.out.println(flag);
+//        if (flag){
+//            return true;
+//        }else {
+//            return false;
+//        }
     }
     /**
      * 参数化替换方法
