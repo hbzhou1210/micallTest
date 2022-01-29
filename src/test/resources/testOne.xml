@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="thread">
     <test name = "demo1">
-        <classes>
+        <classes >
             <class name="com.micall.testCases.LoginCase"/>
             <class name="com.micall.testCases.LoginCase2"/>
             <class name="com.micall.testCases.LoginCase3"/>
-
         </classes>
-
     </test>
+    <listeners>
+        <listener class-name="com.micall.config.ExtentTestNGReporterListener"/>
+    </listeners>
 
 </suite>

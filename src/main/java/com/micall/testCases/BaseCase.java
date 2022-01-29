@@ -13,6 +13,8 @@ import com.micall.utils.CreateRegisterName;
 import com.micall.utils.ExcelUtils;
 import com.micall.utils.HttpsUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.testng.IReporter;
+import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeTest;
 
@@ -194,6 +196,7 @@ public class BaseCase {
     @BeforeTest
     public void init() throws Exception {
         logger.info("======项目自动化开始======");
+        Reporter.log("生成测试报告");
         // 从params.properties中读取参数化内容
         Properties properties = new  Properties();
         FileInputStream fiStream = new FileInputStream("src/test/resources/params.properties");
