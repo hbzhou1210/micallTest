@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="thread">
-    <test name = "demo1">
-        <classes >
+    <test name = "test">
+        <classes>
+            <class name="com.micall.testCases.SafeCodeTest"/>
             <class name="com.micall.testCases.LoginCase"/>
-            <class name="com.micall.testCases.LoginCase2"/>
-            <class name="com.micall.testCases.LoginCase3"/>
+            <class name="com.micall.testCases.GetMyInfo"/>
+            <class name="com.micall.testCases.GetDeviceAll"/>
+            <class name="com.micall.testCases.IMpassportsTest"/>
+            <class name="com.micall.testCases.BlacklistsTest"/>
         </classes>
     </test>
     <listeners>

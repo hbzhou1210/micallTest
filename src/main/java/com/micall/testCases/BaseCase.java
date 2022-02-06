@@ -83,8 +83,8 @@ public class BaseCase {
      * @param resBody
      * @return
      */
-    private  String expression;
-    private  String value;
+//    private  String expression;
+//    private  String value;
     public boolean assertResponse(Cases cases, String language, String resBody){
         boolean flag = false;
         // 根据不同的语言，获取不同的期望响应数据

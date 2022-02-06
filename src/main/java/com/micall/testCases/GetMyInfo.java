@@ -8,9 +8,8 @@ import com.micall.utils.ExcelUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-public class LoginCase extends BaseCase {
-    @Test(dataProvider = "datas" ,description = "登录接口")
+public class GetMyInfo extends BaseCase {
+    @Test(dataProvider = "datas" ,description = "获取本人信息")
     public void execute(API api , Cases cases){
         super.execute(api,cases);
     }
@@ -21,8 +20,7 @@ public class LoginCase extends BaseCase {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        String reqBody = call(api,cases,language,false);
-        AuthorizationUtils.storeToken(reqBody);
+        String reqBody = call(api,cases,language,true);
         boolean assertResponseFlag = assertResponse(cases,language,reqBody);
         String assertContent = (assertResponseFlag) ?"Pass":"Fail";
         if("zh-Hans".equals(language)){
@@ -33,7 +31,7 @@ public class LoginCase extends BaseCase {
     }
     @DataProvider(name = "datas")
     public Object[][] datas(){
-        Object[][] datas = ExcelUtils.getAPIandCaseByApiId("2");
+        Object[][] datas = ExcelUtils.getAPIandCaseByApiId("3");
         return datas;
     }
 }
