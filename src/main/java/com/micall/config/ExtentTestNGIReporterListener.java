@@ -14,14 +14,17 @@ import org.testng.xml.XmlSuite;
 import java.io.File;
 import java.util.*;
 
-public class ExtentTestNGReporterListener implements IReporter{
+public class ExtentTestNGIReporterListener implements IReporter {
+    static Date date = new Date();
+    static String form = String.format("%tF", date);
+    static String hour = String.format("%tH", date);
+    static String minute = String.format("%tM", date);
+    static String second = String.format("%tS", date);
     //生成的路径以及文件名
     private static final String OUTPUT_FOLDER = "test-output/";
-    private static final String FILE_NAME = "index.html";
-
+    private static final String FILE_NAME = "index"+form+hour+minute+second+".html";
     private ExtentReports extent;
 
-    @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         init();
         boolean createSuiteNode = false;
@@ -39,7 +42,7 @@ public class ExtentTestNGReporterListener implements IReporter{
             int suitePassSize=0;
             int suiteSkipSize=0;
             ExtentTest suiteTest=null;
-            //存在多个suite的情况下，在报告中将同一个一个suite的测试结果归为一类，创建一级节点。
+            //存在多个suite的情况下，在报告中将同一个suite的测试结果归为一类，创建一级节点。
             if(createSuiteNode){
                 suiteTest = extent.createTest(suite.getName()).assignCategory(suite.getName());
             }
@@ -93,10 +96,6 @@ public class ExtentTestNGReporterListener implements IReporter{
             }
 
         }
-//        for (String s : Reporter.getOutput()) {
-//            extent.setTestRunnerOutput(s);
-//        }
-
         extent.flush();
     }
 
@@ -107,12 +106,11 @@ public class ExtentTestNGReporterListener implements IReporter{
             reportDir.mkdir();
         }
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(OUTPUT_FOLDER + FILE_NAME);
-        // 设置静态文件的DNS
+        //设置静态文件的DNS
         //怎么样解决cdn.rawgit.com访问不了的情况
         htmlReporter.config().setResourceCDN(ResourceCDN.EXTENTREPORTS);
-
-        htmlReporter.config().setDocumentTitle("api自动化测试报告");
-        htmlReporter.config().setReportName("api自动化测试报告");
+        htmlReporter.config().setDocumentTitle("自动化测试报告");
+        htmlReporter.config().setReportName("自动化测试报告");
         htmlReporter.config().setChartVisibilityOnOpen(true);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setTheme(Theme.STANDARD);
@@ -138,7 +136,6 @@ public class ExtentTestNGReporterListener implements IReporter{
         if (tests.size() > 0) {
             //调整用例排序，按时间排序
             Set<ITestResult> treeSet = new TreeSet<ITestResult>(new Comparator<ITestResult>() {
-                @Override
                 public int compare(ITestResult o1, ITestResult o2) {
                     return o1.getStartMillis()<o2.getStartMillis()?-1:1;
                 }
@@ -164,8 +161,6 @@ public class ExtentTestNGReporterListener implements IReporter{
                     //作为子节点进行创建时，设置同父节点的标签一致，便于报告检索。
                     test = extenttest.createNode(name).assignCategory(categories);
                 }
-                //test.getModel().setDescription(description.toString());
-                //test = extent.createTest(result.getMethod().getMethodName());
                 for (String group : result.getMethod().getGroups())
                     test.assignCategory(group);
 
@@ -192,5 +187,4 @@ public class ExtentTestNGReporterListener implements IReporter{
         calendar.setTimeInMillis(millis);
         return calendar.getTime();
     }
-
 }

@@ -20,7 +20,7 @@ public class IMpassportsTest extends BaseCase {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        String reqBody = call(api,cases,language,false);
+        String reqBody = call(api,cases,language,true);
         boolean assertResponseFlag = assertResponse(cases,language,reqBody);
         String assertContent = (assertResponseFlag) ?"Pass":"Fail";
         addWBD(Integer.parseInt(cases.getCaseNumber()), Constants.ACTUAL_WAITER_BACK_CELL_NUM, reqBody);

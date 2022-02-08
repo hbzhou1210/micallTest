@@ -53,6 +53,8 @@ public class BaseCase {
             }
         }else if("post".equalsIgnoreCase(api.getApiReqMethod())){
             url = api.getApiUrl();
+        }else if("put".equalsIgnoreCase(api.getApiReqMethod())){
+            url = api.getApiUrl();
         }
         String reqMethod = api.getApiReqMethod();
         String submitType = api.getApiSubmitType();

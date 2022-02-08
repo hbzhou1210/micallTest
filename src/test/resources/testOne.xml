@@ -8,10 +8,11 @@
             <class name="com.micall.testCases.GetDeviceAll"/>
             <class name="com.micall.testCases.IMpassportsTest"/>
             <class name="com.micall.testCases.BlacklistsTest"/>
+            <class name="com.micall.testCases.PutMyInfo"/>
         </classes>
     </test>
     <listeners>
-        <listener class-name="com.micall.config.ExtentTestNGReporterListener"/>
+        <listener class-name="com.micall.config.ExtentTestNGIReporterListener"/>
     </listeners>
 
 </suite>
