@@ -4,11 +4,13 @@
         <classes>
             <class name="com.micall.testCases.SafeCodeTest"/>
             <class name="com.micall.testCases.LoginCase"/>
-            <class name="com.micall.testCases.GetMyInfo"/>
-            <class name="com.micall.testCases.GetDeviceAll"/>
-            <class name="com.micall.testCases.IMpassportsTest"/>
-            <class name="com.micall.testCases.BlacklistsTest"/>
-            <class name="com.micall.testCases.PutMyInfo"/>
+<!--            <class name="com.micall.testCases.GetMyInfo"/>-->
+<!--            <class name="com.micall.testCases.GetDeviceAll"/>-->
+<!--            <class name="com.micall.testCases.IMpassportsTest"/>-->
+<!--            <class name="com.micall.testCases.BlacklistsTest"/>-->
+<!--            <class name="com.micall.testCases.PutMyInfo"/>-->
+            <class name="com.micall.testCases.GetContactsCase"/>
+            <class name="com.micall.testCases.PostSentMsgCase"/>
         </classes>
     </test>
     <listeners>

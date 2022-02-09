@@ -12,7 +12,7 @@ public class Constants {
     //final修饰类，类不能被继承
     //final修饰方法，不能被重写
     //Excel路径
-    public static final String EXCEL_PATH="E:\\workspace\\micallTest\\src\\test\\resources\\micall接口测试.xls";
+    public static final String EXCEL_PATH="C:\\Users\\87007\\IdeaProjects\\micallTest\\src\\test\\resources\\micall接口测试.xls";
     //token鉴权版本
     public static final String HEADER_MEDIA_TYPE_NAME="";
     public static final String HEADER_MEDIA_TYPE_VALUE="";
