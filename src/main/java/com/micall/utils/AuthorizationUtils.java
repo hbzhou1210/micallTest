@@ -17,7 +17,7 @@ public class AuthorizationUtils {
     public static void storeToken(String response){
         // 从接口响应中获取token信息
         // 从登录接口的响应数据中获取到token的路径$.data.token_info.token,采用JsonPath，格式是以$开头
-        Object token = JSONPath.read(response,"$.data.accessToken");
+        Object token = JSONPath.read(response,"$.data.token");
         // token不等于空，说明登录成功
         if (token != null){
             // 存储token到环境变量中
@@ -34,7 +34,7 @@ public class AuthorizationUtils {
         // 如果token存在，不为空
         // 字符串工具类StringUtils
         if(StringUtils.isNotBlank(token)){
-            request.addHeader("mh-access-token",token);
+            request.addHeader("CS-Access-Token",token);
         }
     }
 }

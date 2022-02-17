@@ -9,7 +9,7 @@ public class JsonPathValidate {
     private String expression;
     // jsonpath表达式期望找到的值
     private String value;
-
+    private String uin;
     public String getExpression(){
        return expression;
     }
@@ -21,5 +21,11 @@ public class JsonPathValidate {
     }
     public void setValue(String value) {
         this.value = value;
+    }
+    public void getUin(String uin){
+        this.uin = uin;
+    }
+    public String setUin(){
+        return uin;
     }
 }

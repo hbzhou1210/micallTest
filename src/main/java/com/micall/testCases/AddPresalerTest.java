@@ -3,14 +3,13 @@ package com.micall.testCases;
 import com.micall.constant.Constants;
 import com.micall.entity.API;
 import com.micall.entity.Cases;
+import com.micall.utils.AuthorizationUtils;
 import com.micall.utils.ExcelUtils;
-import com.sun.org.glassfish.external.probe.provider.annotations.ProbeListener;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-public class BlacklistsTest extends BaseCase {
-    @Test(dataProvider = "datas" ,description = "获取黑名单列表")
+public class AddPresalerTest extends BaseCase {
+    @Test(dataProvider = "datas" ,description = "新建售前")
     public void execute(API api , Cases cases){
         super.execute(api,cases);
     }
@@ -22,19 +21,18 @@ public class BlacklistsTest extends BaseCase {
             e.printStackTrace();
         }
         String reqBody = call(api,cases,language,true);
+        AuthorizationUtils.storeToken(reqBody);
         boolean assertResponseFlag = assertResponse(cases,language,reqBody);
         String assertContent = (assertResponseFlag) ?"Pass":"Fail";
-        addWBD(Integer.parseInt(cases.getCaseNumber()), Constants.ACTUAL_WAITER_BACK_CELL_NUM, reqBody);
-        addWBD(Integer.parseInt(cases.getCaseNumber()),Constants.ACTUAL_result_CALL_CELL_NUM,assertContent);
-//        if("zh-ch".equals(language)){
-//            addWBD(Integer.parseInt(cases.getCaseNumber()), Constants.ACTUAL_WAITER_BACK_CELL_NUM, reqBody);
-//            addWBD(Integer.parseInt(cases.getCaseNumber()),Constants.ACTUAL_result_CALL_CELL_NUM,assertContent);
-//            System.out.println();
-//        }
+        if("zh-Hans".equals(language)){
+            addWBD(Integer.parseInt(cases.getCaseNumber()), Constants.ACTUAL_WAITER_BACK_CELL_NUM, reqBody);
+            addWBD(Integer.parseInt(cases.getCaseNumber()),Constants.ACTUAL_result_CALL_CELL_NUM,assertContent);
+            System.out.println();
+        }
     }
     @DataProvider(name = "datas")
     public Object[][] datas(){
-        Object[][] datas = ExcelUtils.getAPIandCaseByApiId("6");
+        Object[][] datas = ExcelUtils.getAPIandCaseByApiId("5");
         return datas;
     }
 }
